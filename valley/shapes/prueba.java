@@ -32,6 +32,7 @@ public class prueba
         valley1.makePuncture(2, 50);
         valley1.startRain(60);
         String[] resp = {"green"};
+        valley1.zoom('+');
         assertEquals(resp, valley1.rainFalls());
     }
 }
