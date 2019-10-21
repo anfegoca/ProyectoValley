@@ -5,42 +5,22 @@ import java.util.ArrayList;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Gota
+public class Gota extends Circle
 {
-    // instance variables - replace the example below with your own
-    private int x;
-    private int y;
-    private Circle gota;
-    private String color;
     private int tam;
     /**
      * Constructor for objects of class Gota
      */
     public Gota()
     {
-        gota = new Circle();
+        super();
         tam=10;
-        gota.changeSize(tam);
-        gota.changeColor("cyan");
-    }
-
-    public void makeVisible(){
-        gota.makeVisible();
-    }
-    public void makeInvisible(){
-        gota.makeInvisible();
+        super.changeSize(tam);
+        super.changeColor("cyan");
     }
     public void move(int x, int y){
-        this.x=x;
-        this.y=y;
-        gota.moveHorizontal(x);
-        gota.moveVertical(y);
-    }
-    public void changeColor(String newColor){
-        gota.changeColor(newColor);
-    }
-    public void changeSize(int x){
-        gota.changeSize(x);
+        super.moveHorizontal(x);
+        super.moveVertical(y);
     }
     /**
      * Da la posicion de la gota
@@ -48,8 +28,8 @@ public class Gota
      */    
     public ArrayList getPos(){
         ArrayList pos = new ArrayList();
-        pos.add(x);
-        pos.add(y);
+        pos.add(xPosition);
+        pos.add(yPosition);
         return pos;
     }
 }

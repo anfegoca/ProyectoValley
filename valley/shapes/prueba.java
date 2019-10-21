@@ -22,6 +22,7 @@ public class prueba
         int[] coorInicialTrapB = {65,140};
         int[] coorFinalTrapB = {160,160};
         valley1.addTrap(coorInicialTrapB , coorFinalTrapB);
+        valley1.undo();
         int[] coorInicialTrapC = {40,80};
         int[] coorFinalTrapC = {100,120};
         valley1.addTrap(coorInicialTrapC , coorFinalTrapC);
@@ -33,6 +34,10 @@ public class prueba
         valley1.startRain(60);
         String[] resp = {"green"};
         valley1.zoom('+');
+        valley1.zoom('+');
+        valley1.makeInvisible();
+        valley1.makeVisible();
         assertEquals(resp, valley1.rainFalls());
+        
     }
 }

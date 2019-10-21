@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Lluvia
+public class Lluvia implements Controlador
 {
     // instance variables - replace the example below with your own
     private int x;
@@ -15,6 +15,7 @@ public class Lluvia
     private int xf;
     private int tam;
     private Valley valle;
+    private String color;
     /**
      * Constructor for objects of class Lluvia
      */
@@ -81,4 +82,5 @@ public class Lluvia
         }
         return dir;
     }
+    
 }

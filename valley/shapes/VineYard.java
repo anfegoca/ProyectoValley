@@ -5,28 +5,21 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class VineYard
+public class VineYard extends Rectangle implements Controlador
 {
-    // instance variables - replace the example below with your own
-    private int x;
-    private int y;
     private int xi,xf;
-    private Rectangle yard;
-    private String color;
     private String nombre;
-    private int w,h;
+    private int tam;
     /**
      * Constructor for objects of class VineYard
      */
     public VineYard()
     {
-        // initialise instance variables
-        yard = new Rectangle();
-        h=10;
+        super();
         
-
+        super.changeSize(10,1);
+        
     }
-
     /**
      * Mueve el viñedo los pixeles dados
      *
@@ -36,48 +29,19 @@ public class VineYard
      */
     public void move(int x, int y)
     {
-        yard.moveHorizontal(x);
-        yard.moveVertical(y);
+        super.moveHorizontal(x);
+        super.moveVertical(y);
     }
-    /**
-     * Make this yard visible. If it was already visible, do nothing.
-     */
-    public void makeVisible()
-    {
-        yard.makeVisible();
-    
-    }
-    /**
-     * Make this yard invisible. If it was already invisible, do nothing.
-     */
-    public void makeInvisible()
-    {
-        yard.makeInvisible();
-    }
-    /**
-     * Change the color. 
-     * @param color the new color. Valid colors are "red", "yellow", "blue", "green",
-     * "magenta" and "black".
-     */
-    public void changeColor(String newColor){
-        color = newColor;
-        yard.changeColor(color);
-    }
-    public void changeSize(int w, int h)
-    {
-        this.w=w;
-        this.h=h;
-        yard.changeSize(h,w);
+    public void changeSize(int x){
+        super.changeSize(10,x);
     }
     public int[] getPos(){
         int pos [] = {xi,xf};
         return pos;
     }
-    public int[] getDim(){
-        int dim [] = {w,h};
-        return dim;
+    public int getTam(){
+        return width;
     }
-    
     public void setVin(int xi,int xf, String name){
         this.xi=xi;
         this.xf=xf;

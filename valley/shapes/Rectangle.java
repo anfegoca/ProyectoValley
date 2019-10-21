@@ -9,8 +9,8 @@
  
 public class Rectangle extends Figura{
 
-    private int height;
-    private int width;
+    protected int height;
+    protected int width;
     
 
     /**
@@ -35,8 +35,6 @@ public class Rectangle extends Figura{
         width = newWidth;
         draw();
     }
-    
-    
     /*
      * Draw the rectangle with current specifications on screen.
      */

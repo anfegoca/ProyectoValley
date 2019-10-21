@@ -19,7 +19,7 @@ public class Circle extends Figura{
      */
     public Circle(){
         super();
-        diameter = 30;
+        diameter = 10;
         
     }
 
@@ -33,7 +33,7 @@ public class Circle extends Figura{
         draw();
     }
 
-    /*
+    /**
      * Draw the circle with current specifications on screen.
      */
     public void draw(){

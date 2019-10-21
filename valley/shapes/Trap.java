@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.lang.Math;
 import javax.swing.JOptionPane;
 
-public  class Trap{
+public  class Trap implements Controlador {
     private int x1;
     private int y1;
     private int x2;
@@ -24,8 +24,6 @@ public  class Trap{
         x2=q1;
         y2=q2;
         tam=10;
-
-
         m = ((double)y2-(double)y1)/((double)x2-(double)x1);;
         b = -m*x1+y1;;
         color="black";
@@ -102,8 +100,6 @@ public  class Trap{
             }
         }
     }
-        
-    
     public void quitarHueco(int pos)
     {
         double h = Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));//Se calcula la distancia entre los puntos

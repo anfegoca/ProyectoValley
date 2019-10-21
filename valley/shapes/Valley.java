@@ -16,6 +16,7 @@ public class Valley
     private Rectangle rec;
     private Rectangle rec2;
     private ArrayList<VineYard> vinedos = new ArrayList<VineYard>();
+    private ArrayList<Controlador> elementos = new ArrayList<Controlador>();
     private ArrayList<Lluvia> lluvias = new ArrayList<Lluvia>();
     private ArrayList<Trap> lonas = new ArrayList<Trap>();
     private Trap lona;
@@ -23,12 +24,12 @@ public class Valley
         ,"black","gray","pink","orange"};
     private ArrayList<String> colores = new ArrayList<String>(Arrays.asList(q));
     private Lluvia agua;
-    private boolean isVisible;
-    private ArrayList<Object> ultimocre = new ArrayList<Object>() ;
-    private int ultpos;
-    private ArrayList<Object> ultiel = new ArrayList<Object>();
-    private int ultpos2;
+    private boolean isVisible;    
+    //private int ultpos;
+    //private int ultpos2;
     private String accion;
+    private Controlador ultimo;
+    private Controlador ultimo2;
     /**
      * Constructor for objects of class Valley
      */
@@ -58,7 +59,7 @@ public class Valley
     public void openVineyard(String name, int xi, int xf)
     {
         boolean t = true;
-        accion="crear";
+        
         
         for(VineYard v: vinedos){
             int pos []=v.getPos();
@@ -69,20 +70,14 @@ public class Valley
             }
         }
         if (t){
+            accion="crear";
             VineYard vin = new VineYard();
-            if (ultimocre.size()==0){
-                ultimocre.add(vin);
-                ultpos=vinedos.size();
-            }
-            else{
-                ultimocre.remove(0);
-                ultimocre.add(vin);
-                ultpos=vinedos.size();
-            }            
             vin.setVin(xi,xf,name);
             vinedos.add(vin);
+            ultimo = vin;
+            elementos.add(vin);
             vin.move(xi+5,h-15);
-            vin.changeSize(xf-xi,10);
+            vin.changeSize(10,xf-xi);
             vin.changeColor(colores.get(0));
             colores.remove(colores.remove(0));
             actualizar(); 
@@ -101,58 +96,9 @@ public class Valley
         isVisible=true;
         rec.makeVisible();
         rec2.makeVisible();
-        makeVisibleVine();
-        makeVisibleTraps();
-        makeVisibleLluvias(); 
+        for (Controlador c : elementos){c.makeVisible();}
     }
-    private void changeSizeTraps(int x){
-        for(Trap t: lonas){
-                int tam=t.getTam();
-                t.changeSize(tam+x);
-            }
-    }
-    private void changeSizeLluvia(int x){
-        for(Lluvia l: lluvias){
-                int tam=l.getTam();
-                l.changeSize(tam+x);
-            }
-    }
-    private void changeSizeVinedos(int x){
-        for(VineYard v: vinedos){
-                int [] dim = v.getDim();
-                v.changeSize(dim[0],dim[1]);
-            }
-    }
-    private void makeVisibleTraps(){
-        for(Trap t: lonas){
-                t.makeVisible();
-            }
-    }
-    private void makeVisibleVine(){
-        for(VineYard v: vinedos){
-                v.makeVisible();
-            }
-    }
-    private void makeVisibleLluvias(){
-        for(Lluvia l: lluvias){
-                l.makeVisible();
-            }
-    }
-    private void makeInvisibleTraps(){
-        for(Trap t: lonas){
-                t.makeInvisible();
-            }
-    }
-    private void makeInvisibleVine(){
-        for(VineYard v: vinedos){
-                v.makeInvisible();
-            }
-    }
-    private void makeInvisibleLluvias(){
-        for(Lluvia l: lluvias){
-                l.makeInvisible();
-            }
-    }
+
     private void actualizar(){
         String newColor = "black";
         for(Trap t: lonas){
@@ -187,14 +133,10 @@ public class Valley
      */
     public void zoom(char z){
         if (z=='+'){
-            changeSizeTraps(10);
-            changeSizeLluvia(10);
-            changeSizeVinedos(10);
+            for (Controlador c : elementos){c.changeSize(c.getTam()+10);}
         }
         else if(z == '-'){
-            changeSizeTraps(-10);
-            changeSizeLluvia(-10);
-            changeSizeVinedos(-10);
+            for (Controlador c : elementos){c.changeSize(c.getTam()-10);}
         }else{
             if(isVisible){
                 JOptionPane.showMessageDialog(null, "Valor ingresado invalido","ERROR", JOptionPane.ERROR_MESSAGE);
@@ -209,9 +151,7 @@ public class Valley
         isVisible=false;
         rec.makeInvisible();
         rec2.makeInvisible();
-        makeInvisibleVine();
-        makeInvisibleTraps();
-        makeInvisibleLluvias();
+        for (Controlador c : elementos){c.makeInvisible();}
     }
     /**
      * Cierra un viñedo dado su nombre
@@ -220,25 +160,18 @@ public class Valley
     
     public void closeVineyard(String name)
     {
-        accion ="eliminar";
+        
         boolean f =false;
         for(VineYard c:vinedos){
             if (c.getNombre() == name){
                 c.makeInvisible();
-                if(ultiel.size()==0){
-                    ultiel.add(c);
-                }
-                else{
-                    ultiel.remove(0);
-                    ultiel.add(c);
-                }
                 colores.add(c.getColor());
                 vinedos.remove(c);
+                ultimo2=c;
                 actualizar();
                 f=true;
                 break;
             }
-                
         }
         if(!f){
             if(isVisible){
@@ -246,6 +179,7 @@ public class Valley
                 JOptionPane.showMessageDialog(null, "El viñedo ingresado no existe","ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
+        else{accion = "eliminar";}
     }
     /**
      * Agrega una lona dadas 2 coordenadas
@@ -253,25 +187,18 @@ public class Valley
      * @higherEnd arreglo con la coordenada del segundo punto 
      */
     public void addTrap(int[] lowerEnd, int[] higherEnd){
-        accion = "crear";
+        
         if (lowerEnd[0]==higherEnd[0] || lowerEnd[1]==higherEnd[1] || lowerEnd[0]== 0 || higherEnd[0] == w || lowerEnd[1] == h || higherEnd[1] == h && isVisible){
             JOptionPane.showMessageDialog(null, "Lona invalida","ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            
+            accion = "crear";
             String colorLona ="black";
             
             lona = new Trap(5+lowerEnd[0],lowerEnd[1],higherEnd[0],higherEnd[1]);
-            if (ultimocre.size()==0){
-                ultimocre.add(lona);
-                ultpos = lonas.size();
-             }
-            else{
-                ultimocre.remove(0);
-                ultimocre.add(lona);
-                ultpos = lonas.size();
-            }
+            ultimo = lona;
             lonas.add(lona);
+            elementos.add(lona);
             actualizar();
             if(isVisible){
                 lona.makeVisible();
@@ -283,21 +210,15 @@ public class Valley
      * @param position
      */
     public void removeTrap(int position){
-        accion ="eliminar";
+        
         if(position > lonas.size() || position<=0 && isVisible){
             JOptionPane.showMessageDialog(null, "La lona ingresada no existe","ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            if (ultiel.size()==0){
-                ultiel.add(lonas.get(position-1));
-                ultpos2 = position-1;
-            }
-            else{
-                ultiel.remove(0);
-                ultiel.add(lonas.get(position-1));
-                ultpos2 = position-1;
-            }
+            accion = "eliminar";
+            ultimo2 = lonas.get(position-1);
             lonas.get(position-1).makeInvisible();
+            
             lonas.remove(position-1);
         }
     }
@@ -310,8 +231,7 @@ public class Valley
     {
         if (trap > lonas.size() && isVisible){
             JOptionPane.showMessageDialog(null, "No existe lona","ERROR", JOptionPane.ERROR_MESSAGE);
-        }else{
-        
+        }else{        
             Trap l = lonas.get(trap-1);
             if (l.Long() < x && isVisible){
                 JOptionPane.showMessageDialog(null, "El punto ingresado está fuera de la lona","ERROR", JOptionPane.ERROR_MESSAGE);
@@ -362,7 +282,7 @@ public class Valley
      * @param x posición desde donde saldrá la lluvia
      */
     public void startRain(int x){
-        accion ="crear";
+        
         if ( (x < 0 || x>h-5) && isVisible ){
             JOptionPane.showMessageDialog(null, "No puede llover fuera del valle","ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -376,22 +296,15 @@ public class Valley
                 }
             }
             if(!f){
+                accion= "crear";
                 if(isVisible){
                     JOptionPane.showMessageDialog(null, "Ya está lloviendo en esta posición","ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             else{
                 Lluvia lluvia = new Lluvia(x, h, this);
-                if (ultimocre.size()==0){
-                    ultimocre.add(lluvia);
-                    ultpos=lluvias.size();
-                }
-                else{
-                    ultimocre.remove(0);
-                    ultimocre.add(lluvia);
-                    ultpos=lluvias.size();
-                }
                 lluvias.add(lluvia);
+                elementos.add(lluvia);
                 if(isVisible){
                     lluvia.makeVisible();
                 }
@@ -404,19 +317,11 @@ public class Valley
      *  
      */
      public void stopRain(int x){
-        accion ="eliminar"; 
         boolean f=false;
         int a=0;
         for(int i = 0; i<lluvias.size();i++){
             if(lluvias.get(i).getPosL()[0] == x){
                 lluvias.get(i).makeInvisible();
-                if (ultiel.size()==0){
-                    ultiel.add(lluvias.get(i));
-                }
-                else{
-                    ultiel.remove(0);
-                    ultiel.add(lluvias.get(i));
-                }
                 a=i;
                 f=true;
                 break;
@@ -500,7 +405,6 @@ public class Valley
                 }
             mm.add(nn);
             }
-        
         return mm;
     }         
    /**
@@ -520,59 +424,14 @@ public class Valley
    }
    
    public void undo(){
-       if (accion=="crear"){ 
-       if (ultimocre.get(0) instanceof VineYard){
-           VineYard x = (VineYard)ultimocre.get(0);
-           if(isVisible){
-               x.makeInvisible();
-            }
-           vinedos.remove(ultpos);
-           actualizar();
-        }
-       else if (ultimocre.get(0) instanceof Trap){
-           Trap x = (Trap)ultimocre.get(0);
-           if(isVisible){
-               x.makeInvisible();
-            }
+       if (accion=="eliminar"){
+           ultimo2.makeVisible();
            
-           lonas.remove(ultpos);
-       }
-       else if(ultimocre.get(0) instanceof Lluvia){
-           Lluvia l= (Lluvia)ultimocre.get(0);
-           if(isVisible){
-               l.makeInvisible();
-            }
            
-           lluvias.remove(ultpos);
-           
-        }
-    }
-    else{
-       if (ultiel.get(0) instanceof Trap){
-          Trap x = (Trap)ultiel.get(0);
-          if(isVisible){
-              x.makeVisible();
-            }
-          
-          lonas.add(ultpos2,x);
-          
-        }
-       else if (ultiel.get(0) instanceof VineYard){
-           VineYard x = (VineYard)ultiel.get(0);
-          if(isVisible){
-              x.makeVisible();
-            }           
-          vinedos.add(x);
-        }
-       else{
-           Lluvia x = (Lluvia)ultiel.get(0);
-           if(isVisible){
-              x.makeVisible();
            }
-           lluvias.add(x);
+       else {
            
-        }
-    }
+           ultimo.makeInvisible();}
    }
 }
 
