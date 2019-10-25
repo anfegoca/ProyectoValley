@@ -59,8 +59,6 @@ public class Valley
     public void openVineyard(String name, int xi, int xf)
     {
         boolean t = true;
-        
-        
         for(VineYard v: vinedos){
             int pos []=v.getPos();
 
@@ -187,14 +185,12 @@ public class Valley
      * @higherEnd arreglo con la coordenada del segundo punto 
      */
     public void addTrap(int[] lowerEnd, int[] higherEnd){
-        
         if (lowerEnd[0]==higherEnd[0] || lowerEnd[1]==higherEnd[1] || lowerEnd[0]== 0 || higherEnd[0] == w || lowerEnd[1] == h || higherEnd[1] == h && isVisible){
             JOptionPane.showMessageDialog(null, "Lona invalida","ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else{
             accion = "crear";
             String colorLona ="black";
-            
             lona = new Trap(5+lowerEnd[0],lowerEnd[1],higherEnd[0],higherEnd[1]);
             ultimo = lona;
             lonas.add(lona);
@@ -210,16 +206,14 @@ public class Valley
      * @param position
      */
     public void removeTrap(int position){
-        
         if(position > lonas.size() || position<=0 && isVisible){
             JOptionPane.showMessageDialog(null, "La lona ingresada no existe","ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else{
             accion = "eliminar";
-            ultimo2 = lonas.get(position-1);
-            lonas.get(position-1).makeInvisible();
-            
-            lonas.remove(position-1);
+            if (lonas.get(position-1).eliminese()){
+                lonas.remove(position-1);
+            }
         }
     }
     /**
@@ -241,7 +235,8 @@ public class Valley
         }
     }
     /**
-     * Tapa un hueco en la lona dada en la posición dada
+     * Tapa un hueco 
+     * en la lona dada en la posición dada
      * @param trap numero de la lona
      * @param x posición donde se tapará el hueco
      */
@@ -261,11 +256,11 @@ public class Valley
             }
         }
     }
-    public int[] next(int x, int y){
+    public int[] next(int x, int y,boolean acid){
         int [] pos;
         pos = new int[2];
         for(Trap t: lonas){
-            int[] aux = t.next(x,y);
+            int[] aux = t.next(x,y,acid);
             if(aux[0]==0){
                 pos[0] = x;
                 pos[1] = y+1;
@@ -302,7 +297,8 @@ public class Valley
                 }
             }
             else{
-                Lluvia lluvia = new Lluvia(x, h, this);
+                Lluvia lluvia = new Lluvia(this);
+                lluvia.llover(x,h);
                 lluvias.add(lluvia);
                 elementos.add(lluvia);
                 if(isVisible){
@@ -374,7 +370,6 @@ public class Valley
      */    
     public ArrayList traps(){
         ArrayList<ArrayList> mm = new ArrayList<ArrayList>();
-        
         for (int h=0;h<lonas.size();h++){
             lona = lonas.get(h);
             ArrayList<ArrayList> nn = new ArrayList<ArrayList>();
@@ -382,18 +377,14 @@ public class Valley
                 int [][] pos = lona.getPos();
                 if (i==0){
                     ArrayList oo = new ArrayList();
-                 
                     oo.add(pos[0][0]-5);
                     oo.add(pos[1][0]);
-                    
                     nn.add(oo);
-                    
                 }
                 else if(i==1){
                     ArrayList oo = new ArrayList();
                     oo.add(pos[0][1]);
                     oo.add(pos[1][1]);
-                    
                     nn.add(oo);
                 }
                 else{
@@ -401,36 +392,29 @@ public class Valley
                     oo = lona.posHuec();
                     nn.add(oo);   
                     }
-                
                 }
             mm.add(nn);
             }
         return mm;
     }         
-   /**
+    /**
      * Devuelve información del recoorido de la lluvia
      * @param posi coordenadas del recorrido de la lluvia
      */
-   public ArrayList rains(){
+    public ArrayList rains(){
         ArrayList <ArrayList> posi = new ArrayList<ArrayList>();
-        
         for (Lluvia l:lluvias){
             ArrayList posl = l.posLluvia();
             posi.add(posl);
         }
         System.out.println(posi);
         return posi;
-        
    }
-   
    public void undo(){
        if (accion=="eliminar"){
-           ultimo2.makeVisible();
-           
-           
+           ultimo2.makeVisible();       
            }
-       else {
-           
+       else{         
            ultimo.makeInvisible();}
    }
 }

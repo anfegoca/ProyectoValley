@@ -6,15 +6,16 @@ import java.lang.Math;
 import javax.swing.JOptionPane;
 
 public  class Trap implements Controlador {
-    private int x1;
-    private int y1;
-    private int x2;
-    private int y2;
-    private double m,b;
-    private ArrayList<Puncture> huecos = new ArrayList<Puncture>();
-    private ArrayList<Puncture> punctures = new ArrayList<Puncture>();
-    private String color;
-    private int tam;
+    protected int x1;
+    protected int y1;
+    protected int x2;
+    protected int y2;
+    protected double m,b;
+    protected ArrayList<Puncture> huecos = new ArrayList<Puncture>();
+    protected ArrayList<Puncture> punctures = new ArrayList<Puncture>();
+    protected String color;
+    protected int tam;
+    protected boolean isVisible;
     /**
      * Constructor Trap
      */
@@ -36,6 +37,10 @@ public  class Trap implements Controlador {
             huecos.add(hueco);
         }
     }
+    public boolean eliminese(){
+        this.makeInvisible();
+        return true;
+    }
     /**
      * Cambia de color la lona
      * @param newColor nuevo color de la lona
@@ -52,7 +57,7 @@ public  class Trap implements Controlador {
      * Make visible trap
      */
     public void makeVisible(){ 
-        
+        isVisible=true;
         for(Puncture p: huecos){
             if(p.getColor()!="white"){
                 p.makeVisible();
@@ -78,6 +83,7 @@ public  class Trap implements Controlador {
      * Make invisible trap
      */
     public void makeInvisible(){
+        isVisible=false;
         for(Puncture p: huecos){
             p.makeInvisible();
         }
@@ -97,6 +103,18 @@ public  class Trap implements Controlador {
             punctures.add(hue);
             if(isVisible){
                 hue.makeVisible();
+            }
+        }
+    }
+    public void hacerHueco(int x, int y){
+        for(Puncture p: huecos){
+            if (p.getx()==x && p.gety()==y){
+                punctures.add(p);
+                p.setPx(x-x1);
+                p.changeColor("white");
+                if(isVisible){
+                    p.makeVisible();
+                }
             }
         }
     }
@@ -145,10 +163,15 @@ public  class Trap implements Controlador {
         double [] ecu = {m,b};
         return ecu;
     }
-    public int[] next(int x, int y){
+    public int[] next(int x, int y,boolean acid){
         int [] pos;
         pos = new int[2];
-        if (((int)(m*x+b) == y) && (x>x1 && x<x2)){
+        if(((int)(m*x+b) == y ) && (x>x1 && x<x2) && acid){
+            pos[0]=0;
+            pos[1]=0;
+            this.hacerHueco(x,y);
+        }
+        else if (((int)(m*x+b) == y) && (x>x1 && x<x2)){
             boolean fhueco=true;
             for(Puncture p: punctures){
                 if(p.getx()==x){

@@ -10,25 +10,29 @@ import java.util.Arrays;
 public class Lluvia implements Controlador
 {
     // instance variables - replace the example below with your own
-    private int x;
-    private ArrayList<Gota> gotas = new ArrayList<Gota>();
-    private int xf;
-    private int tam;
-    private Valley valle;
-    private String color;
+    protected int x;
+    protected ArrayList<Gota> gotas = new ArrayList<Gota>();
+    protected int xf;
+    protected int tam;
+    protected Valley valle;
+    protected String color;
     /**
      * Constructor for objects of class Lluvia
      */
-    public Lluvia(int x,int y,Valley valle)
+    public Lluvia(Valley valle)
     {   
         this.valle=valle;
+        tam=10;
+        color="cyan";
+    }
+    public void llover(int x,int y){
+        int ini=0;
         this.x=x;
         xf=x;
-        tam=10;
-        int ini=0;
         while(ini<y-10){
-            int[] pos = valle.next(xf,ini);
             Gota gota = new Gota();
+            gota.changeColor(color);
+            int[] pos = valle.next(xf,ini,false);
             gota.move(pos[0],pos[1]);
             gotas.add(gota);
             ini=pos[1];

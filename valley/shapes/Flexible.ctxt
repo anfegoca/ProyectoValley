@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Flexible
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Flexible\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=p1\ p2\ q1\ q2
+comment1.target=Flexible(int,\ int,\ int,\ int)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Flexible\r\n
+comment2.params=pos\ isVisible
+comment2.target=void\ hacerHueco(int,\ boolean)
+numComments=3

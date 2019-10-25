@@ -42,6 +42,9 @@ public class Puncture extends Rectangle
     public int getx(){
         return xPosition;
     }
+    public int gety(){
+        return yPosition;
+    }
     public String getColor(){
         return color;
     }
