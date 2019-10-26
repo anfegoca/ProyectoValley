@@ -39,6 +39,9 @@ public class Lluvia implements Controlador
             xf=pos[0];
         }
     }
+    public void parar(){
+        this.makeInvisible();
+    }
     /**
      * Hace visible la lluvia
      */
@@ -59,22 +62,26 @@ public class Lluvia implements Controlador
         }
     }
     /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * Hace invisible la Lluvia
+     *  
      */
     public void makeInvisible()
     {
         for(Gota g: gotas){
             g.makeInvisible();
         }
-       
     }
+    /**
+     * Retorna el tamaño de la lluvia
+     * @return tam tamaño de la lluvia
+     */
     public int getTam(){
         return tam;
     }
-    
+    /**
+     * Retorna la posicion de inicio y fin de la lluvia
+     * @return pos Array con xi y xf
+     */
     public int[] getPosL(){
         int [] pos = {x,xf};
         return pos;

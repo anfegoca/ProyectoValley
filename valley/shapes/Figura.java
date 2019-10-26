@@ -1,9 +1,14 @@
+
+
+
 /**
  * Abstract class Figura - write a description of the class here
  * 
  * @author: 
  * Date: 
  */
+ 
+
 public abstract class Figura
 {
     // instance variables - replace the example below with your own

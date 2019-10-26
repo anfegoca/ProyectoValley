@@ -317,7 +317,7 @@ public class Valley
         int a=0;
         for(int i = 0; i<lluvias.size();i++){
             if(lluvias.get(i).getPosL()[0] == x){
-                lluvias.get(i).makeInvisible();
+                lluvias.get(i).parar();
                 a=i;
                 f=true;
                 break;
