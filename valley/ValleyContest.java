@@ -15,9 +15,10 @@ public class ValleyContest
         
     }
 
-    public int solve(int[] vineyard,int[] traps){
-        sdsdas sol = new sdsdas();
-        return 0;
+    public int solve(int[] vineyard,int[][]traps){
+        Solucion sol = new Solucion();
+        int res=sol.solu(vineyard,traps);
+        return res;
     }
     public boolean simulate(int[] vineyard,int[] traps, boolean slow){
         Valley valle = new Valley(500,500);

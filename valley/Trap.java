@@ -12,6 +12,7 @@ public  class Trap implements Controlador {
     protected int y1;
     protected int x2;
     protected int y2;
+    protected Valley valle;
     protected double m,b;
     protected ArrayList<Puncture> huecos = new ArrayList<Puncture>();
     protected ArrayList<Puncture> punctures = new ArrayList<Puncture>();
@@ -21,12 +22,13 @@ public  class Trap implements Controlador {
     /**
      * Constructor Trap
      */
-    public Trap(int p1,int p2,int q1,int q2){
+    public Trap(int p1,int p2,int q1,int q2,Valley valle){
         x1=p1;
         y1=p2;
         x2=q1;
         y2=q2;
         tam=10;
+        this.valle=valle;
         m = ((double)y2-(double)y1)/((double)x2-(double)x1);;
         b = -m*x1+y1;;
         color="black";
@@ -214,5 +216,14 @@ public  class Trap implements Controlador {
             res[i]=punctures.get(i).getx();
         }
         return res;
+    }
+    public void elimineme(){
+        valle.removeTrap(valle.traps().size()-1);
+    }
+    public void agregueme(){
+        int [] p1 = {x1,y1};
+        int [] p2 = {x2,y2};
+        
+        valle.addTrap(p1,p2);
     }
 }

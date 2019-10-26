@@ -71,7 +71,7 @@ public class Valley
         }
         if (t){
             accion="crear";
-            VineYard vin = new VineYard();
+            VineYard vin = new VineYard(this);
             vin.setVin(xi,xf,name);
             vinedos.add(vin);
             ultimo = vin;
@@ -193,7 +193,7 @@ public class Valley
         else{
             accion = "crear";
             String colorLona ="black";
-            lona = new Trap(5+lowerEnd[0],lowerEnd[1],higherEnd[0],higherEnd[1]);
+            lona = new Trap(5+lowerEnd[0],lowerEnd[1],higherEnd[0],higherEnd[1],this);
             ultimo = lona;
             lonas.add(lona);
             elementos.add(lona);
@@ -278,7 +278,7 @@ public class Valley
      * Hace caer lluvia en la posición x del valle
      * @param x posición desde donde saldrá la lluvia
      */
-    public void startRain(int x){
+    public void startRain(int x, String rainName){
         
         if ( (x < 0 || x>h-5) && isVisible ){
             JOptionPane.showMessageDialog(null, "No puede llover fuera del valle","ERROR", JOptionPane.ERROR_MESSAGE);
@@ -296,6 +296,43 @@ public class Valley
                 accion= "crear";
                 if(isVisible){
                     JOptionPane.showMessageDialog(null, "Ya está lloviendo en esta posición","ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else{
+                try{
+                    Object obj = Class.forName(rainName);
+                    ((Lluvia)obj).llover(x,h);
+                lluvias.add(((Lluvia)obj));
+                elementos.add(((Lluvia)obj));
+                if(isVisible){
+                    ((Lluvia)obj).makeVisible();
+                }
+                }catch(Exception e){
+                    System.out.println("Error"+e.getMessage());
+                }
+                
+                
+            }
+        }
+    }
+    public void startRain(int x){
+        
+        if ( (x < 0 || x>h-5) && isVisible ){
+            JOptionPane.showMessageDialog(null, "No puede llover fuera del valle","ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        else{
+            boolean f=true;
+            for (int i=0; i<lluvias.size(); i++){
+                if(lluvias.get(i).getPosL()[0] == x){
+                    f=false;
+                    break;
+                }
+            }
+            if(!f){
+                accion= "crear";
+                if(isVisible){
+                    JOptionPane.showMessageDialog(null, "Ya est� lloviendo en esta posici�n","ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             else{
@@ -413,12 +450,19 @@ public class Valley
         return posi;
    }
    public void undo(){
+       
        if (accion=="eliminar"){
-           ultimo2.makeVisible();       
+           ultimo2.makeVisible();
+           ultimo2.agregueme();
            }
        else{         
-           ultimo.makeInvisible();}
+           ultimo.makeInvisible();
+           ultimo.elimineme();
+        }
    }
+   public void redo(){
+       this.undo();
+    }
 }
 
 

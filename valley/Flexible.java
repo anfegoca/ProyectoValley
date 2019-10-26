@@ -20,9 +20,9 @@ public class Flexible extends Trap
     /**
      * Constructor for objects of class Flexible
      */
-    public Flexible(int p1,int p2,int q1,int q2)
+    public Flexible(int p1,int p2,int q1,int q2,Valley valle)
     {
-        super(p1,p2,q1,q2);
+        super(p1,p2,q1,q2,valle);
     }
      public void hacerHueco(int pos, boolean isVisible)
     {

@@ -33,9 +33,9 @@ public class prueba
         valley1.addTrap(coorInicialTrapD , coorFinalTrapD);
         valley1.makePuncture(1, 60);
         valley1.makePuncture(2, 50);
-        //valley1.startRain(80);
-        valley1.startRain(300);
-        valley1.startRain(60);
+        valley1.startRain(80,"Acid");
+        //valley1.startRain(300);
+        //valley1.startRain(60);
         
         
         String[] resp = {"green"};

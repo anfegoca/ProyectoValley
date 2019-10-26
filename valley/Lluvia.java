@@ -88,6 +88,10 @@ public class Lluvia implements Controlador
         int [] pos = {x,xf};
         return pos;
     }
+    /**
+     * Retorna el recorrido de la lluvia
+     * @return posLluvia arraylist con posiciones del recorrido de la lluvia
+     */
     public ArrayList posLluvia(){
         ArrayList <ArrayList>dir = new ArrayList<ArrayList>();
         for (Gota g:gotas){
@@ -95,5 +99,17 @@ public class Lluvia implements Controlador
         }
         return dir;
     }
-    
+    /**
+     * Solicita al valle que lo elimine del valle
+     * 
+     */
+    public void elimineme(){
+        valle.stopRain(x);
+    }
+    /**
+     * Solicita al valle que lo agregue al valle
+     */
+    public void agregueme(){
+        valle.startRain(x);
+    }
 }

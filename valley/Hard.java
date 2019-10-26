@@ -17,9 +17,9 @@ public class Hard extends Trap
     /**
      * Constructor for objects of class hard
      */
-    public Hard(int p1,int p2,int q1,int q2)
+    public Hard(int p1,int p2,int q1,int q2,Valley valle)
     {
-        super(p1,p2,q1,q2);
+        super(p1,p2,q1,q2,valle);
     }
     public boolean eliminese(){
         return false;

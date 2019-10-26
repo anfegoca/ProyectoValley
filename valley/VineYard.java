@@ -12,13 +12,14 @@ public class VineYard extends Rectangle implements Controlador
     private int xi,xf;
     private String nombre;
     private int tam;
+    private Valley valle;
     /**
      * Constructor for objects of class VineYard
      */
-    public VineYard()
+    public VineYard(Valley valle)
     {
         super();
-        
+        this.valle=valle;
         super.changeSize(10,1);
         
     }
@@ -34,16 +35,29 @@ public class VineYard extends Rectangle implements Controlador
         super.moveHorizontal(x);
         super.moveVertical(y);
     }
+    /**
+     * cambia el tamaño del viñedo
+     * @param x numero de pixeles que se aumentan
+     */
     public void changeSize(int x){
         super.changeSize(10,x);
     }
+    /**
+     * Retorna información de las posiciones del viñedo
+     * @return pos arreglo con la posicion inicial y final del viñedo
+     */
     public int[] getPos(){
         int pos [] = {xi,xf};
         return pos;
     }
+    /**
+     * Retorna informacion del tamaño del viñedo
+     * @return width tamaño del viñedo
+     */
     public int getTam(){
         return width;
     }
+    
     public void setVin(int xi,int xf, String name){
         this.xi=xi;
         this.xf=xf;
@@ -54,5 +68,12 @@ public class VineYard extends Rectangle implements Controlador
     }
     public String getColor(){
         return color;
+    }
+    public void elimineme(){
+        valle.closeVineyard(nombre);
+        
+    }
+    public void agregueme(){
+        valle.openVineyard(nombre,xi,xf);
     }
 }

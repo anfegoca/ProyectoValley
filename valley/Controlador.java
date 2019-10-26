@@ -14,4 +14,6 @@ public interface Controlador
    public void changeSize(int x);
    public void makeInvisible();
    public int getTam();
+   public void elimineme();
+   public void agregueme();
 }
