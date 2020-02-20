@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Controlador
+comment0.text=\r\n\ Write\ a\ description\ of\ interface\ Controlador\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=void\ makeVisible()
+comment2.params=x
+comment2.target=void\ changeSize(int)
+comment3.params=
+comment3.target=void\ makeInvisible()
+comment4.params=
+comment4.target=int\ getTam()
+comment5.params=
+comment5.target=void\ elimineme()
+comment6.params=
+comment6.target=void\ agregueme()
+numComments=7

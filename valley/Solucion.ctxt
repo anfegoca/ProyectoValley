@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Solucion
+comment1.params=
+comment1.target=void\ Solution()
+comment2.params=vi\u00F1edo\ traps
+comment2.target=int\ solu(int[],\ int[][])
+comment3.params=nodo
+comment3.target=void\ topologicoVisitar(int)
+numComments=4
